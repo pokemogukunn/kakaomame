@@ -415,14 +415,16 @@
         updateCookieCounter();
     }, 1000);
 
-    // パスワードプロンプト
-    var password = prompt("閲覧パスワードを入力してください:");
-    if (password === "73451") {
-        content.style.display = "block";
-    } else {
-        alert("パスワードが間違っています");
-        content.style.display = "none";
-    }
+    // ページが読み込まれたときにパスワードを確認する
+    window.onload = function() {
+        var password = prompt("閲覧パスワードを入力してください:");
+        if (password === "73451") {
+            content.style.display = "block";
+        } else {
+            alert("パスワードが間違っています");
+            content.style.display = "none";
+        }
+    };
 </script>
 </body>
 </html>
