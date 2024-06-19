@@ -13,7 +13,7 @@
   ],
   "routes": [
     {
-      "src": "/app/(.*)",
+      "src": "/*/(.*)",
       "dest": "/app/index.html"
     }
   ]
