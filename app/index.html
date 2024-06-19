@@ -87,96 +87,100 @@
         #cheatOptions input {
             margin: 10px;
         }
+        #content {
+            display: none;
+        }
     </style>
 </head>
 <body>
-<div class="top-bar">
-    <div>
-        <input type="text" id="shopNameInput" placeholder="クッキー屋さんの名前を入力" oninput="updateShopName()" />
-        <button onclick="randomizeShopName()">ランダムに選ぶ</button>
+<div id="content">
+    <div class="top-bar">
+        <div>
+            <input type="text" id="shopNameInput" placeholder="クッキー屋さんの名前を入力" oninput="updateShopName()" />
+            <button onclick="randomizeShopName()">ランダムに選ぶ</button>
+        </div>
+        <div>
+            <p id="xpCounter">経験値: 0</p>
+            <p id="cheatMessage">チート発動</p>
+            <p id="antiCheatMessage">チート解除</p>
+        </div>
+        <div>
+            <button id="saveButton" onclick="saveGame()">セーブ</button>
+            <button id="loadButton" onclick="showLoadPrompt()">セーブデータ読み込み</button>
+        </div>
+    </div><br>
+    <div class="left-section">
+    <br>
+        <p id="cookieCounter">クッキー: 0</p>
+        <div id="clicker"><span class="clicker-icon" onclick="clickCookie()">🍪</span></div>
+    <br>
+        <p id="cps">クッキー/秒: 0</p>
+    </div>
+    <div class="right-section">
+        <div id="cursor" class="shop-item">
+            <span class="icon" onclick="buyCursor()">👆</span>
+            <button id="buyCursorButton" onclick="buyCursor()">カーソルを購入 (15クッキー)</button>
+        </div>
+        <div id="granny" class="shop-item">
+            <span class="icon" onclick="buyGranny()">👵</span>
+            <button id="buyGrannyButton" onclick="buyGranny()">おばあちゃんを雇う (100クッキー)</button>
+        </div>
+        <div id="farm" class="shop-item">
+            <span class="icon" onclick="buyFarm()">🌾</span>
+            <button id="buyFarmButton" onclick="buyFarm()">農場を購入 (1,100クッキー)</button>
+        </div>
+        <div id="mine" class="shop-item">
+            <span class="icon" onclick="buyMine()">⛏️</span>
+            <button id="buyMineButton" onclick="buyMine()">鉱山を購入 (12,000クッキー)</button>
+        </div>
+        <div id="factory" class="shop-item">
+            <span class="icon" onclick="buyFactory()">🏭</span>
+            <button id="buyFactoryButton" onclick="buyFactory()">工場を購入 (130,000クッキー)</button>
+        </div>
+        <div id="temple" class="shop-item">
+            <span class="icon" onclick="buyTemple()">⛩️</span>
+            <button id="buyTempleButton" onclick="buyTemple()">神殿を購入 (2,000,000クッキー)</button>
+        </div>
+        <div id="tower" class="shop-item">
+            <span class="icon" onclick="buyTower()">🏰</span>
+            <button id="buyTowerButton" onclick="buyTower()">魔法の塔を購入 (33,000,000クッキー)</button>
+        </div>
+        <div id="ship" class="shop-item">
+            <span class="icon" onclick="buyShip()">🚢</span>
+            <button id="buyShipButton" onclick="buyShip()">貨物船を購入 (510,000,000クッキー)</button>
+        </div>
+    </div>
+    <div class="bottom-section">
+        <div>
+            <button id="gachaNormalButton" class="gacha-button" onclick="rollGacha('normal')">ノーマルガチャ (10クッキー)</button>
+            <button id="gachaRareButton" class="gacha-button" onclick="rollGacha('rare')">レアガチャ (100クッキー)</button>
+            <button id="gachaEpicButton" class="gacha-button" onclick="rollGacha('epic')">エピックガチャ (1,000クッキー)</button>
+        </div>
+        <div>
+            <h2>エンチャント</h2>
+            <button class="enchant-button" onclick="enchant()">エンチャント (150クッキー)</button>
+        </div>
     </div>
     <div>
-        <p id="xpCounter">経験値: 0</p>
-        <p id="cheatMessage">チート発動</p>
-        <p id="antiCheatMessage">チート解除</p>
+        <h2>実績</h2>
+        <ul id="achievements"></ul>
     </div>
-    <div>
-        <button id="saveButton" onclick="saveGame()">セーブ</button>
-        <button id="loadButton" onclick="showLoadPrompt()">セーブデータ読み込み</button>
+    <div id="loadPrompt" style="display:none;">
+        <input type="text" id="saveCodeInput" placeholder="セーブコードを入力" />
+        <button id="loadGameButton" onclick="loadGame()">読み込み</button>
+        <button id="closeButton" onclick="hideLoadPrompt()">閉じる</button>
     </div>
-</div><br>
-<div class="left-section">
-<br>
-    <p id="cookieCounter">クッキー: 0</p>
-    <div id="clicker"><span class="clicker-icon" onclick="clickCookie()">🍪</span></div>
-<br>
-    <p id="cps">クッキー/秒: 0</p>
+    <div id="saveCodeDisplay"></div>
+    <div id="cheatOptions">
+        <label for="cheatCookies">クッキー数:</label>
+        <input type="number" id="cheatCookies" min="0" />
+        <label for="cheatXp">経験値:</label>
+        <input type="number" id="cheatXp" min="0" />
+        <button onclick="applyCheats()">適用</button>
+    </div>
+    <!-- チートトグルボタン -->
+    <button id="cheatToggleButton" onclick="toggleCheatMode()">入力ミス</button>
 </div>
-<div class="right-section">
-    <div id="cursor" class="shop-item">
-        <span class="icon" onclick="buyCursor()">👆</span>
-        <button id="buyCursorButton" onclick="buyCursor()">カーソルを購入 (15クッキー)</button>
-    </div>
-    <div id="granny" class="shop-item">
-        <span class="icon" onclick="buyGranny()">👵</span>
-        <button id="buyGrannyButton" onclick="buyGranny()">おばあちゃんを雇う (100クッキー)</button>
-    </div>
-    <div id="farm" class="shop-item">
-        <span class="icon" onclick="buyFarm()">🌾</span>
-        <button id="buyFarmButton" onclick="buyFarm()">農場を購入 (1,100クッキー)</button>
-    </div>
-    <div id="mine" class="shop-item">
-        <span class="icon" onclick="buyMine()">⛏️</span>
-        <button id="buyMineButton" onclick="buyMine()">鉱山を購入 (12,000クッキー)</button>
-    </div>
-    <div id="factory" class="shop-item">
-        <span class="icon" onclick="buyFactory()">🏭</span>
-        <button id="buyFactoryButton" onclick="buyFactory()">工場を購入 (130,000クッキー)</button>
-    </div>
-    <div id="temple" class="shop-item">
-        <span class="icon" onclick="buyTemple()">⛩️</span>
-        <button id="buyTempleButton" onclick="buyTemple()">神殿を購入 (2,000,000クッキー)</button>
-    </div>
-    <div id="tower" class="shop-item">
-        <span class="icon" onclick="buyTower()">🏰</span>
-        <button id="buyTowerButton" onclick="buyTower()">魔法の塔を購入 (33,000,000クッキー)</button>
-    </div>
-    <div id="ship" class="shop-item">
-        <span class="icon" onclick="buyShip()">🚢</span>
-        <button id="buyShipButton" onclick="buyShip()">貨物船を購入 (510,000,000クッキー)</button>
-    </div>
-</div>
-<div class="bottom-section">
-    <div>
-        <button id="gachaNormalButton" class="gacha-button" onclick="rollGacha('normal')">ノーマルガチャ (10クッキー)</button>
-        <button id="gachaRareButton" class="gacha-button" onclick="rollGacha('rare')">レアガチャ (100クッキー)</button>
-        <button id="gachaEpicButton" class="gacha-button" onclick="rollGacha('epic')">エピックガチャ (1,000クッキー)</button>
-    </div>
-    <div>
-        <h2>エンチャント</h2>
-        <button class="enchant-button" onclick="enchant()">エンチャント (150クッキー)</button>
-    </div>
-</div>
-<div>
-    <h2>実績</h2>
-    <ul id="achievements"></ul>
-</div>
-<div id="loadPrompt" style="display:none;">
-    <input type="text" id="saveCodeInput" placeholder="セーブコードを入力" />
-    <button id="loadGameButton" onclick="loadGame()">読み込み</button>
-    <button id="closeButton" onclick="hideLoadPrompt()">閉じる</button>
-</div>
-<div id="saveCodeDisplay"></div>
-<div id="cheatOptions">
-    <label for="cheatCookies">クッキー数:</label>
-    <input type="number" id="cheatCookies" min="0" />
-    <label for="cheatXp">経験値:</label>
-    <input type="number" id="cheatXp" min="0" />
-    <button onclick="applyCheats()">適用</button>
-</div>
-<!-- チートトグルボタン -->
-<button id="cheatToggleButton" onclick="toggleCheatMode()">入力ミス</button>
-
 <script>
     var cookieCount = 0;
     var cursors = 0;
@@ -204,6 +208,7 @@
     var saveCodeDisplay = document.getElementById('saveCodeDisplay');
     var achievementsList = document.getElementById('achievements');
     var cheatOptions = document.getElementById('cheatOptions');
+    var content = document.getElementById('content');
 
     // チートトグル用の関数
     function toggleCheatMode() {
@@ -409,6 +414,15 @@
         cookieCount += cps;
         updateCookieCounter();
     }, 1000);
+
+    // パスワードプロンプト
+    var password = prompt("閲覧パスワードを入力してください:");
+    if (password === "73451") {
+        content.style.display = "block";
+    } else {
+        alert("パスワードが間違っています");
+        content.style.display = "none";
+    }
 </script>
 </body>
 </html>
