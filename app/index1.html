@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パスワード保護ページ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>パスワードを入力してください</h1>
+        <input type="password" id="password" placeholder="パスワード">
+        <button onclick="checkPassword()">送信</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const correctPassword = '85175';
+            const inputPassword = document.getElementById('password').value;
+            const messageDiv = document.getElementById('message');
+
+            if (inputPassword === correctPassword) {
+                window.location.href = 'index.html';
+            } else {
+                window.location.href = 'https://www.google.com';
+            }
+        }
+    </script>
+</body>
+</html>
