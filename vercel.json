@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "minecraft-like-game",
+  "name": "Cookie-clicker",
   "builds": [
     {
       "src": "/app/index.html",
