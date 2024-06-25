@@ -46,11 +46,20 @@
             const messageDiv = document.getElementById('message');
 
             if (inputPassword === correctPassword) {
-                window.location.href = '/kakaomame';
+                localStorage.setItem('authenticated', 'true');
+                window.location.href = '/app/index.html';
             } else {
+                messageDiv.textContent = 'パスワードが違います。もう一度お試しください。';
                 window.location.href = 'https://www.google.com';
             }
         }
+
+        // 初回アクセス時に認証済みかどうかを確認
+        document.addEventListener('DOMContentLoaded', (event) => {
+            if (localStorage.getItem('authenticated') === 'true') {
+                window.location.href = '/app/index.html';
+            }
+        });
     </script>
 </body>
 </html>
