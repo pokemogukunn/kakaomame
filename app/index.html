@@ -416,15 +416,17 @@
     }, 1000);
 
     // ページが読み込まれたときにパスワードを確認する
-    window.onload = function() {
-        var password = prompt("閲覧パスワードを入力してください:");
-        if (password === "73451") {
-            content.style.display = "block";
-        } else {
-            alert("パスワードが間違っています");
-            content.style.display = "none";
-        }
-    };
-</script>
+   <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const correctPassword = '85175';
+            const enteredPassword = document.getElementById('password').value;
+            if (enteredPassword === correctPassword) {
+                alert('Password is correct!');
+            } else {
+                window.location.href = 'https://www.google.com';
+            }
+        });
+    </script>
 </body>
 </html>
