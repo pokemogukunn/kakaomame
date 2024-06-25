@@ -7,7 +7,7 @@
       "use": "@vercel/static"
     },
     {
-      "src": "main.js",
+      "src": "/app/index1.html",
       "use": "@vercel/static"
     }
   ],
