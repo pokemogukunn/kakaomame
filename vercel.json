@@ -3,7 +3,7 @@
   "name": "Cookie-clicker",
   "builds": [
     {
-      "src": "/app/index.html",
+      "src": "/app/index1.html",
       "use": "@vercel/static"
     },
     {
@@ -14,7 +14,7 @@
   "routes": [
     {
       "src": "/*/(.*)",
-      "dest": "/app/index.html"
+      "dest": "/app/index1.html"
     }
   ]
 }
