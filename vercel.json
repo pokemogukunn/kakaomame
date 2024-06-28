@@ -7,7 +7,7 @@
       "dest": "/app/index1.html"
     },
     {
-      "src": "/kakaomame",
+      "src": "/kakaomame.html",
       "dest": "/app/kakaomame.html"
     }
   ],
