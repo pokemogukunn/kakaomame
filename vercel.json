@@ -16,5 +16,8 @@
       "src": "/*/(.*)",
       "dest": "/app/index1.html"
     }
+  ],
+  "rewrites": [
+    { "source": "/kakaomame", "destination": "/kakaomame.html" }
   ]
 }
