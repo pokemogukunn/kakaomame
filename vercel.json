@@ -1,23 +1,18 @@
 {
   "version": 2,
   "name": "Cookie-clicker",
-  "builds": [
+  "routes": [
     {
-      "src": "/app/index1.html",
-      "use": "@vercel/static"
+      "src": "/kakaomame",
+      "dest": "/app/kakaomame.html"
     },
     {
       "src": "/app/index1.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
+      "dest": "/app/index1.html"
+    },
     {
-      "src": "/*/(.*)",
+      "src": "/*",
       "dest": "/app/index1.html"
     }
-  ],
-  "rewrites": [
-    { "source": "/kakaomame", "destination": "/kakaomame.html" }
   ]
 }
