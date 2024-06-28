@@ -87,110 +87,115 @@
         #cheatOptions input {
             margin: 10px;
         }
-        #content {
-            display: none;
-        }
     </style>
 </head>
 <body>
-<div id="content">
-    <div class="top-bar">
-        <div>
-            <input type="text" id="shopNameInput" placeholder="クッキー屋さんの名前を入力" oninput="updateShopName()" />
-            <button onclick="randomizeShopName()">ランダムに選ぶ</button>
-        </div>
-        <div>
-            <p id="xpCounter">経験値: 0</p>
-            <p id="cheatMessage">チート発動</p>
-            <p id="antiCheatMessage">チート解除</p>
-        </div>
-        <div>
-            <button id="saveButton" onclick="saveGame()">セーブ</button>
-            <button id="loadButton" onclick="showLoadPrompt()">セーブデータ読み込み</button>
-        </div>
-    </div><br>
-    <div class="left-section">
-    <br>
-        <p id="cookieCounter">クッキー: 0</p>
-        <div id="clicker"><span class="clicker-icon" onclick="clickCookie()">🍪</span></div>
-    <br>
-        <p id="cps">クッキー/秒: 0</p>
-    </div>
-    <div class="right-section">
-        <div id="cursor" class="shop-item">
-            <span class="icon" onclick="buyCursor()">👆</span>
-            <button id="buyCursorButton" onclick="buyCursor()">カーソルを購入 (15クッキー)</button>
-        </div>
-        <div id="granny" class="shop-item">
-            <span class="icon" onclick="buyGranny()">👵</span>
-            <button id="buyGrannyButton" onclick="buyGranny()">おばあちゃんを雇う (100クッキー)</button>
-        </div>
-        <div id="farm" class="shop-item">
-            <span class="icon" onclick="buyFarm()">🌾</span>
-            <button id="buyFarmButton" onclick="buyFarm()">農場を購入 (1,100クッキー)</button>
-        </div>
-        <div id="mine" class="shop-item">
-            <span class="icon" onclick="buyMine()">⛏️</span>
-            <button id="buyMineButton" onclick="buyMine()">鉱山を購入 (12,000クッキー)</button>
-        </div>
-        <div id="factory" class="shop-item">
-            <span class="icon" onclick="buyFactory()">🏭</span>
-            <button id="buyFactoryButton" onclick="buyFactory()">工場を購入 (130,000クッキー)</button>
-        </div>
-        <div id="temple" class="shop-item">
-            <span class="icon" onclick="buyTemple()">⛩️</span>
-            <button id="buyTempleButton" onclick="buyTemple()">神殿を購入 (2,000,000クッキー)</button>
-        </div>
-        <div id="tower" class="shop-item">
-            <span class="icon" onclick="buyTower()">🏰</span>
-            <button id="buyTowerButton" onclick="buyTower()">魔法の塔を購入 (33,000,000クッキー)</button>
-        </div>
-        <div id="ship" class="shop-item">
-            <span class="icon" onclick="buyShip()">🚢</span>
-            <button id="buyShipButton" onclick="buyShip()">貨物船を購入 (510,000,000クッキー)</button>
-        </div>
-    </div>
-    <div class="bottom-section">
-        <div>
-            <button id="gachaNormalButton" class="gacha-button" onclick="rollGacha('normal')">ノーマルガチャ (10クッキー)</button>
-            <button id="gachaRareButton" class="gacha-button" onclick="rollGacha('rare')">レアガチャ (100クッキー)</button>
-            <button id="gachaEpicButton" class="gacha-button" onclick="rollGacha('epic')">エピックガチャ (1,000クッキー)</button>
-        </div>
-        <div>
-            <h2>エンチャント</h2>
-            <button class="enchant-button" onclick="enchant()">エンチャント (150クッキー)</button>
-        </div>
+<div class="top-bar">
+    <div>
+        <input type="text" id="shopNameInput" placeholder="クッキー屋さんの名前を入力" oninput="updateShopName()" />
+        <button onclick="randomizeShopName()">ランダムに選ぶ</button>
     </div>
     <div>
-        <h2>実績</h2>
-        <ul id="achievements"></ul>
+        <p id="xpCounter">経験値: 0</p>
+        <p id="cheatMessage">チート発動</p>
+        <p id="antiCheatMessage">チート解除</p>
     </div>
-    <div id="loadPrompt" style="display:none;">
-        <input type="text" id="saveCodeInput" placeholder="セーブコードを入力" />
-        <button id="loadGameButton" onclick="loadGame()">読み込み</button>
-        <button id="closeButton" onclick="hideLoadPrompt()">閉じる</button>
+    <div>
+        <button id="saveButton" onclick="saveGame()">セーブ</button>
+        <button id="loadButton" onclick="showLoadPrompt()">セーブデータ読み込み</button>
     </div>
-    <div id="saveCodeDisplay"></div>
-    <div id="cheatOptions">
-        <label for="cheatCookies">クッキー数:</label>
-        <input type="number" id="cheatCookies" min="0" />
-        <label for="cheatXp">経験値:</label>
-        <input type="number" id="cheatXp" min="0" />
-        <button onclick="applyCheats()">適用</button>
-    </div>
-    <!-- チートトグルボタン -->
-    <button id="cheatToggleButton" onclick="toggleCheatMode()">入力ミス</button>
+</div><br>
+<div class="left-section">
+<br>
+    <p id="cookieCounter">クッキー: 0</p>
+    <div id="clicker"><span class="clicker-icon" onclick="clickCookie()">🍪</span></div>
+<br>
+    <p id="cps">クッキー/秒: 0</p>
 </div>
+<div class="right-section">
+    <!-- 商品リストの生成 -->
+    <script>
+        const shopItems = [
+            {id: 'cursor', name: 'カーソル', icon: '👆', price: 15, cps: 1},
+            {id: 'granny', name: 'おばあちゃん', icon: '👵', price: 100, cps: 10},
+            {id: 'farm', name: '農場', icon: '🌾', price: 1100, cps: 100},
+            {id: 'mine', name: '鉱山', icon: '⛏️', price: 12000, cps: 200},
+            {id: 'factory', name: '工場', icon: '🏭', price: 130000, cps: 1000},
+            {id: 'temple', name: '神殿', icon: '⛩️', price: 2000000, cps: 10000},
+            {id: 'tower', name: '魔法の塔', icon: '🏰', price: 33000000, cps: 50000},
+            {id: 'ship', name: '貨物船', icon: '🚢', price: 510000000, cps: 100000},
+            {id: 'lab', name: '研究所', icon: '🔬', price: 7500000000, cps: 500000},
+            {id: 'portal', name: 'ポータル', icon: '🌀', price: 100000000000, cps: 1000000},
+            {id: 'timeMachine', name: 'タイムマシン', icon: '⏰', price: 1400000000000, cps: 10000000},
+            {id: 'antimatterCondenser', name: '反物質凝縮器', icon: '⚛️', price: 17000000000000, cps: 100000000},
+            {id: 'prism', name: 'プリズム', icon: '🔮', price: 210000000000000, cps: 1000000000},
+            {id: 'chancemaker', name: 'チャンスメイカー', icon: '🎲', price: 2600000000000000, cps: 10000000000},
+            {id: 'fractalEngine', name: 'フラクタルエンジン', icon: '🧬', price: 31000000000000000, cps: 100000000000},
+            {id: 'javascriptConsole', name: 'JavaScriptコンソール', icon: '💻', price: 710000000000000000, cps: 500000000000},
+            {id: 'idleverse', name: 'アイドルバース', icon: '🌌', price: 12000000000000000000, cps: 1000000000000},
+            {id: 'goldenSwitch', name: 'ゴールデンスイッチ', icon: '🔆', price: 500000000000000000000, cps: 5000000000000},
+            {id: 'hackerSpace', name: 'ハッカースペース', icon: '🤖', price: 9000000000000000000000, cps: 10000000000000},
+            {id: 'cookieComet', name: 'クッキー彗星', icon: '🌠', price: 150000000000000000000000, cps: 50000000000000},
+            {id: 'nebula', name: '星雲', icon: '☁️', price: 3000000000000000000000000, cps: 100000000000000},
+            {id: 'quantumComputer', name: '量子コンピュータ', icon: '🖥️', price: 60000000000000000000000000, cps: 500000000000000},
+            {id: 'singularity', name: 'シンギュラリティ', icon: '🌌', price: 1000000000000000000000000000, cps: 1000000000000000},
+            {id: 'alienFactory', name: 'エイリアン工場', icon: '👽', price: 15000000000000000000000000000, cps: 5000000000000000},
+            {id: 'warpDrive', name: 'ワープドライブ', icon: '🚀', price: 300000000000000000000000000000, cps: 10000000000000000},
+            {id: 'galacticEmpire', name: '銀河帝国', icon: '👾', price: 6000000000000000000000000000000, cps: 50000000000000000},
+            {id: 'universe', name: 'ユニバース', icon: '🌌', price: 120000000000000000000000000000000, cps: 100000000000000000},
+            {id: 'multiverse', name: 'マルチバース', icon: '🌠', price: 2400000000000000000000000000000000, cps: 500000000000000000},
+            {id: 'omniverse', name: 'オムニバース', icon: '🌌', price: 48000000000000000000000000000000000, cps: 1000000000000000000}
+        ];
+
+        let shopItemsHtml = '';
+        shopItems.forEach(item => {
+            shopItemsHtml += `
+                <div id="${item.id}" class="shop-item">
+                    <span class="icon" onclick="buyItem('${item.id}')">${item.icon}</span>
+                    <button onclick="buyItem('${item.id}')">${item.name}を購入 (${item.price}クッキー)</button>
+                    <button onclick="sellItem('${item.id}')">${item.name}を売却 (${Math.floor(item.price / 2)}クッキー)</button>
+                </div>`;
+        });
+        document.write(shopItemsHtml);
+    </script>
+</div>
+<div class="bottom-section">
+    <div>
+        <button id="gachaNormalButton" class="gacha-button" onclick="rollGacha('normal')">ノーマルガチャ (10クッキー)</button>
+        <button id="gachaRareButton" class="gacha-button" onclick="rollGacha('rare')">レアガチャ (100クッキー)</button>
+        <button id="gachaEpicButton" class="gacha-button" onclick="rollGacha('epic')">エピックガチャ (1,000クッキー)</button>
+    </div>
+    <div>
+        <h2>エンチャント</h2>
+        <button class="enchant-button" onclick="enchant()">エンチャント (150クッキー)</button>
+    </div>
+</div>
+<div>
+    <h2>実績</h2>
+    <ul id="achievements"></ul>
+</div>
+<div id="loadPrompt" style="display:none;">
+    <input type="text" id="saveCodeInput" placeholder="セーブコードを入力" />
+    <button id="loadGameButton" onclick="loadGame()">読み込み</button>
+    <button id="closeButton" onclick="hideLoadPrompt()">閉じる</button>
+</div>
+<div id="saveCodeDisplay"></div>
+<div id="cheatOptions">
+    <label for="cheatCookies">クッキー数:</label>
+    <input type="number" id="cheatCookies" min="0" />
+    <label for="cheatXp">経験値:</label>
+    <input type="number" id="cheatXp" min="0" />
+    <button onclick="applyCheats()">適用</button>
+</div>
+<!-- チートトグルボタン -->
+<button id="cheatToggleButton" onclick="toggleCheatMode()">入力ミス</button>
+
 <script>
     var cookieCount = 0;
-    var cursors = 0;
-    var grannies = 0;
-    var farms = 0;
-    var mines = 0;
-    var factories = 0;
-    var temples = 0;
-    var towers = 0;
-    var ships = 0;
+    var items = {};
+    shopItems.forEach(item => {
+        items[item.id] = {count: 0, cps: item.cps, price: item.price};
+    });
     var cps = 0;
     var xp = 0;
     var cheatMode = false;
@@ -208,7 +213,6 @@
     var saveCodeDisplay = document.getElementById('saveCodeDisplay');
     var achievementsList = document.getElementById('achievements');
     var cheatOptions = document.getElementById('cheatOptions');
-    var content = document.getElementById('content');
 
     // チートトグル用の関数
     function toggleCheatMode() {
@@ -259,14 +263,7 @@
     function saveGame() {
         var saveData = {
             cookieCount: cookieCount,
-            cursors: cursors,
-            grannies: grannies,
-            farms: farms,
-            mines: mines,
-            factories: factories,
-            temples: temples,
-            towers: towers,
-            ships: ships,
+            items: items,
             cps: cps,
             xp: xp
         };
@@ -290,18 +287,12 @@
         try {
             var saveData = JSON.parse(atob(saveCode));
             cookieCount = saveData.cookieCount;
-            cursors = saveData.cursors;
-            grannies = saveData.grannies;
-            farms = saveData.farms;
-            mines = saveData.mines;
-            factories = saveData.factories;
-            temples = saveData.temples;
-            towers = saveData.towers;
-            ships = saveData.ships;
+            items = saveData.items;
             cps = saveData.cps;
             xp = saveData.xp;
             updateCookieCounter();
             updateXpCounter();
+            updateCps();
             hideLoadPrompt();
         } catch (e) {
             alert('セーブデータが無効です');
@@ -309,73 +300,22 @@
     }
 
     // 商品を購入する関数
-    function buyCursor() {
-        if (cookieCount >= 15) {
-            cookieCount -= 15;
-            cursors++;
+    function buyItem(id) {
+        if (cookieCount >= items[id].price) {
+            cookieCount -= items[id].price;
+            items[id].count++;
+            items[id].price = Math.floor(items[id].price * 1.15);
             updateCookieCounter();
             updateCps();
         }
     }
 
-    function buyGranny() {
-        if (cookieCount >= 100) {
-            cookieCount -= 100;
-            grannies++;
-            updateCookieCounter();
-            updateCps();
-        }
-    }
-
-    function buyFarm() {
-        if (cookieCount >= 1100) {
-            cookieCount -= 1100;
-            farms++;
-            updateCookieCounter();
-            updateCps();
-        }
-    }
-
-    function buyMine() {
-        if (cookieCount >= 12000) {
-            cookieCount -= 12000;
-            mines++;
-            updateCookieCounter();
-            updateCps();
-        }
-    }
-
-    function buyFactory() {
-        if (cookieCount >= 130000) {
-            cookieCount -= 130000;
-            factories++;
-            updateCookieCounter();
-            updateCps();
-        }
-    }
-
-    function buyTemple() {
-        if (cookieCount >= 2000000) {
-            cookieCount -= 2000000;
-            temples++;
-            updateCookieCounter();
-            updateCps();
-        }
-    }
-
-    function buyTower() {
-        if (cookieCount >= 33000000) {
-            cookieCount -= 33000000;
-            towers++;
-            updateCookieCounter();
-            updateCps();
-        }
-    }
-
-    function buyShip() {
-        if (cookieCount >= 510000000) {
-            cookieCount -= 510000000;
-            ships++;
+    // 商品を売却する関数
+    function sellItem(id) {
+        if (items[id].count > 0) {
+            items[id].count--;
+            cookieCount += Math.floor(items[id].price / 2);
+            items[id].price = Math.floor(items[id].price / 1.15);
             updateCookieCounter();
             updateCps();
         }
@@ -383,7 +323,10 @@
 
     // クッキー/秒を更新する関数
     function updateCps() {
-        cps = cursors + grannies * 10 + farms * 100 + mines * 200 + factories * 1000 + temples * 10000 + towers * 50000 + ships * 100000;
+        cps = 0;
+        for (let id in items) {
+            cps += items[id].count * items[id].cps;
+        }
         cpsCounter.textContent = 'クッキー/秒: ' + cps;
     }
 
@@ -414,5 +357,6 @@
         cookieCount += cps;
         updateCookieCounter();
     }, 1000);
+</script>
 </body>
 </html>
