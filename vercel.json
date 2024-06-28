@@ -3,16 +3,18 @@
   "name": "Cookie-clicker",
   "routes": [
     {
+      "src": "/",
+      "dest": "/app/index1.html"
+    },
+    {
       "src": "/kakaomame",
       "dest": "/app/kakaomame.html"
-    },
+    }
+  ],
+  "rewrites": [
     {
-      "src": "/app/index1.html",
-      "dest": "/app/index1.html"
-    },
-    {
-      "src": "/*",
-      "dest": "/app/index1.html"
+      "source": "/app/index1.html",
+      "destination": "/app/index1.html"
     }
   ]
 }
